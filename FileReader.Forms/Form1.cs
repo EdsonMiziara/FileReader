@@ -1,12 +1,19 @@
 using FileReader.Models.Modelos.Factory;
-using FileReader.Models.Modelos.Interface;
+using FileReader.Models.Modelos.Abstracoes;
+using FileReader.Forms.Services.Abstracoes;
+using FileReader.Models.Modelos.Models;
+using FileReader.Forms.Services;
 
 namespace FileReader.Forms;
 
 public partial class Form1 : Form
 {
+    private List<IArquivo> Arquivos;
+    private Dictionary<IArquivo, string> ArquivosDictionary;
     public Form1()
     {
+        this.Arquivos = new List<IArquivo>();
+        this.ArquivosDictionary = new Dictionary<IArquivo, string>();
         InitializeComponent();
     }
 
@@ -24,24 +31,30 @@ public partial class Form1 : Form
             if (result == DialogResult.OK)
             {
                 string filePath = folderBrowser.SelectedPath;
-                
+
                 try
                 {
-                    string[] files = Directory.GetFiles(filePath);
-                    List<IArquivo> arquivos = new List<IArquivo>();
+                    string[] arquivos = Directory.GetFiles(filePath);
+                    List<IArquivo> arquivosSelecionados = new List<IArquivo>();
 
-                    foreach (string file in files) 
+                    foreach (string arquivo in arquivos)
                     {
-                        if (File.Exists(file))
+                        if (File.Exists(arquivo))
                         {
-                            IArquivo arquivo = FileFactory.CriarArquivo(file);
-                            if (arquivo != null)
+                            IArquivo arquivoAtual = FileFactory.CriarArquivo(arquivo);
+                            if (arquivoAtual != null)
                             {
-                                MessageBox.Show(arquivo.ToString());
-                                arquivos.Add(arquivo);
+                                arquivosSelecionados.Add(arquivoAtual);
+                                ArquivosEncontrados.Items.Add(arquivoAtual);
+                                ArquivosEncontrados.Items.ToString();
+                                var texto = new LeitorArquivoPdf(arquivoAtual.Caminho).RealizaLeitura();
+                                ArquivosDictionary.Add(arquivoAtual, texto);  
+                                MessageBox.Show(texto);
                             }
                         }
                     }
+                    MessageBox.Show($"Aruivos encontrados: {arquivosSelecionados.Count()}");
+                    this.Arquivos = arquivosSelecionados;
                 }
                 catch (Exception ex)
                 {
@@ -51,6 +64,17 @@ public partial class Form1 : Form
             else
             {
                 Console.WriteLine("Nenhuma pasta selecionada.");
+            }
+        }
+    }
+
+    private void ArquivosEncontrados_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (ArquivosEncontrados.CheckedItems.Count > 0)
+        {
+            foreach (IArquivo arquivo in ArquivosEncontrados.CheckedItems)
+            {
+                arquivo.Marcado = true;
             }
         }
     }

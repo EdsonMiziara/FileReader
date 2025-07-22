@@ -1,4 +1,4 @@
-﻿using FileReader.Models.Modelos.Interface;
+﻿using FileReader.Models.Modelos.Abstracoes;
 
 namespace FileReader.Models.Modelos.Models;
 
@@ -7,6 +7,7 @@ public class WordFile : IArquivo
     public string Caminho { get; set; }
     public string? Nome { get; private set; }
     public long? Tamanho { get; private set; }
+    public bool Marcado { get; set; } = false;
 
     public WordFile(string caminho)
     {
@@ -41,6 +42,6 @@ public class WordFile : IArquivo
     }
     public override string ToString()
     {
-        return $"Word Nome: {Nome}, Caminho: {Caminho}, Tamanho: {Tamanho} KB";
+        return $"{Nome}";
     }
 }

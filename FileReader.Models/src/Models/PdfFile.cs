@@ -1,4 +1,4 @@
-﻿using FileReader.Models.Modelos.Interface;
+﻿using FileReader.Models.Modelos.Abstracoes;
 
 namespace FileReader.Models.Modelos.Models;
 
@@ -7,6 +7,8 @@ public class PdfFile : IArquivo
     public string Caminho { get; }
     public string? Nome { get; private set; }
     public long? Tamanho { get; private set; }
+
+    public bool Marcado { get; set; } = false;
 
     public PdfFile(string caminho)
     {
@@ -43,6 +45,6 @@ public class PdfFile : IArquivo
     }
     public override string ToString()
     {
-        return $"PDF Nome: {Nome}, Caminho: {Caminho}, Tamanho: {Tamanho} KB";
+        return $"{Nome}";
     }
 }

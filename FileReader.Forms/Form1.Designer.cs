@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             chooseFileButton = new Button();
+            ArquivosEncontrados = new CheckedListBox();
             SuspendLayout();
             // 
             // chooseFileButton
@@ -41,12 +42,24 @@
             chooseFileButton.UseVisualStyleBackColor = true;
             chooseFileButton.Click += chooseFileButton_Click;
             // 
+            // ArquivosEncontrados
+            // 
+            ArquivosEncontrados.CheckOnClick = true;
+            ArquivosEncontrados.FormattingEnabled = true;
+            ArquivosEncontrados.Location = new Point(12, 12);
+            ArquivosEncontrados.Name = "ArquivosEncontrados";
+            ArquivosEncontrados.Size = new Size(205, 310);
+            ArquivosEncontrados.Sorted = true;
+            ArquivosEncontrados.TabIndex = 1;
+            ArquivosEncontrados.SelectedIndexChanged += ArquivosEncontrados_SelectedIndexChanged;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.GrayText;
             ClientSize = new Size(800, 450);
+            Controls.Add(ArquivosEncontrados);
             Controls.Add(chooseFileButton);
             Name = "Form1";
             Text = "Form1";
@@ -56,5 +69,6 @@
         #endregion
 
         private Button chooseFileButton;
+        private CheckedListBox ArquivosEncontrados;
     }
 }

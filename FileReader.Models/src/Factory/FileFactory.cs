@@ -1,4 +1,4 @@
-﻿using FileReader.Models.Modelos.Interface;
+﻿using FileReader.Models.Modelos.Abstracoes;
 using FileReader.Models.Modelos.Models;
 
 namespace FileReader.Models.Modelos.Factory;
